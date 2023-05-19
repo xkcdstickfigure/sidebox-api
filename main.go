@@ -4,10 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
+	"alles/boxes/env"
+
 	"github.com/go-chi/chi/v5"
 )
 
 func main() {
+	fmt.Println("DatabaseUrl = " + env.DatabaseUrl)
+
 	r := chi.NewRouter()
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
