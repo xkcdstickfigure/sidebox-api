@@ -1,17 +1,27 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"net/http"
 
 	"alles/boxes/env"
+	"alles/boxes/store"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {
-	fmt.Println("DatabaseUrl = " + env.DatabaseUrl)
+	// connect to database
+	conn, err := pgxpool.New(context.Background(), env.DatabaseUrl)
+	if err != nil {
+		log.Fatalf("failed to connect to database: %v\n", err)
+	}
+	_ = store.Store{Conn: conn}
 
+	// http server
 	r := chi.NewRouter()
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
