@@ -6,7 +6,9 @@ import (
 	"log"
 	"net/http"
 
+	"alles/boxes/api"
 	"alles/boxes/env"
+	"alles/boxes/google"
 	"alles/boxes/store"
 
 	"github.com/go-chi/chi/v5"
@@ -19,15 +21,18 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v\n", err)
 	}
-	_ = store.Store{Conn: conn}
+	db := store.Store{Conn: conn}
 
-	// http server
+	// router
 	r := chi.NewRouter()
+	r.Mount("/api", api.NewRouter(db))
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hello world"))
+	// redirect to google auth
+	r.Get("/auth", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, google.GenerateUrl(""), http.StatusTemporaryRedirect)
 	})
 
+	// start http server
 	fmt.Println("starting http server on :3000")
 	http.ListenAndServe(":3000", r)
 }
