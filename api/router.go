@@ -11,6 +11,7 @@ func NewRouter(db store.Store) chi.Router {
 	h := handlers{db}
 
 	r.Post("/login", h.login)
+	r.Get("/account", h.account)
 
 	return r
 }
