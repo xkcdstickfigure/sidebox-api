@@ -7,10 +7,18 @@ create table account (
 );
 
 create table session (
-    id             uuid          primary key,
-    account_id     uuid          references account on delete cascade,
-    token          text          unique,
-    address        text,
-    user_agent     text,
-    created_at     timestamptz
+    id           uuid          primary key,
+    account_id   uuid          references account on delete cascade,
+    token        text          unique,
+    address      text,
+    user_agent   text,
+    created_at   timestamptz
+);
+
+create table inbox (
+    id           uuid          primary key,
+    account_id   uuid          references account on delete cascade,
+    code         text          unique,
+    name         text,
+    created_at   timestamptz
 );
