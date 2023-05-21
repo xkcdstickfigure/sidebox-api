@@ -22,12 +22,36 @@ func (h handlers) account(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get inboxes
+	inboxes, err := h.db.InboxList(r.Context(), account.Id)
+	if err != nil {
+		apierr.Respond(w, apierr.DatabaseError)
+		return
+	}
+
 	// response
+	type resInbox struct {
+		Id   string `json:"id"`
+		Name string `json:"name"`
+		Code string `json:"code"`
+	}
+
+	resInboxes := []resInbox{}
+	for _, i := range inboxes {
+		resInboxes = append(resInboxes, resInbox{
+			Id:   i.Id,
+			Name: i.Name,
+			Code: i.Code,
+		})
+	}
+
 	respond(w, struct {
-		Id    string `json:"id"`
-		Email string `json:"email"`
+		Id      string     `json:"id"`
+		Email   string     `json:"email"`
+		Inboxes []resInbox `json:"inboxes"`
 	}{
-		Id:    account.Id,
-		Email: account.Email,
+		Id:      account.Id,
+		Email:   account.Email,
+		Inboxes: resInboxes,
 	})
 }

@@ -40,3 +40,25 @@ func (s Store) InboxCreate(ctx context.Context, accountId string, name string) (
 		Scan(&inbox.Id, &inbox.AccountId, &inbox.Code, &inbox.Name, &inbox.CreatedAt)
 	return inbox, err
 }
+
+func (s Store) InboxList(ctx context.Context, accountId string) ([]Inbox, error) {
+	inboxes := []Inbox{}
+	rows, err := s.Conn.Query(ctx, "select id, account_id, code, name, created_at from inbox "+
+		"where account_id=$1 "+
+		"order by created_at desc",
+		accountId)
+	if err != nil {
+		return inboxes, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var inbox Inbox
+		err = rows.Scan(&inbox.Id, &inbox.AccountId, &inbox.Code, &inbox.Name, &inbox.CreatedAt)
+		if err != nil {
+			return inboxes, err
+		}
+		inboxes = append(inboxes, inbox)
+	}
+	return inboxes, err
+}
