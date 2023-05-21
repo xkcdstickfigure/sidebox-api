@@ -9,6 +9,7 @@ import (
 	"alles/boxes/api"
 	"alles/boxes/env"
 	"alles/boxes/google"
+	"alles/boxes/receiver"
 	"alles/boxes/store"
 
 	"github.com/go-chi/chi/v5"
@@ -26,6 +27,7 @@ func main() {
 	// router
 	r := chi.NewRouter()
 	r.Mount("/api", api.NewRouter(db))
+	r.Post("/receive", receiver.Handler(db))
 
 	// redirect to google auth
 	r.Get("/auth", func(w http.ResponseWriter, r *http.Request) {
