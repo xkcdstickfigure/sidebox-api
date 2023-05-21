@@ -22,3 +22,15 @@ create table inbox (
     name         text,
     created_at   timestamptz
 );
+
+create table message (
+    id             uuid          primary key,
+    inbox_id       uuid          references inbox on delete cascade,
+    message_id     text,
+    from_name      text,
+    from_address   text,
+    subject        text,
+    body           text,
+    html           boolean,
+    date           timestamptz
+);
