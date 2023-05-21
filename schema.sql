@@ -1,36 +1,36 @@
 create table account (
     id           uuid          primary key,
-    name         text,
-    email        text          unique,
-    google_id    text          unique,
-    created_at   timestamptz
+    name         text          not null,
+    email        text          not null unique,
+    google_id    text          not null unique,
+    created_at   timestamptz   not null
 );
 
 create table session (
     id           uuid          primary key,
-    account_id   uuid          references account on delete cascade,
-    token        text          unique,
-    address      text,
-    user_agent   text,
-    created_at   timestamptz
+    account_id   uuid          not null references account on delete cascade,
+    token        text          not null unique,
+    address      text          not null,
+    user_agent   text          not null,
+    created_at   timestamptz   not null
 );
 
 create table inbox (
     id           uuid          primary key,
-    account_id   uuid          references account on delete cascade,
-    code         text          unique,
-    name         text,
-    created_at   timestamptz
+    account_id   uuid          not null references account on delete cascade,
+    code         text          not null unique,
+    name         text          not null,
+    created_at   timestamptz   not null
 );
 
 create table message (
     id             uuid          primary key,
-    inbox_id       uuid          references inbox on delete cascade,
-    message_id     text,
-    from_name      text,
-    from_address   text,
-    subject        text,
-    body           text,
-    html           boolean,
-    date           timestamptz
+    inbox_id       uuid          not null references inbox on delete cascade,
+    message_id     text          not null,
+    from_name      text          not null,
+    from_address   text          not null,
+    subject        text          not null,
+    body           text          not null,
+    html           boolean       not null,
+    date           timestamptz   not null
 );
