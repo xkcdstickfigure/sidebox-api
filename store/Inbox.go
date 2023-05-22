@@ -68,3 +68,8 @@ func (s Store) InboxSetUnread(ctx context.Context, id string, unread bool) error
 	_, err := s.Conn.Exec(ctx, "update inbox set unread=$2 where id=$1", id, unread)
 	return err
 }
+
+func (s Store) InboxDelete(ctx context.Context, id string) error {
+	_, err := s.Conn.Exec(ctx, "delete from inbox where id=$1", id)
+	return err
+}
