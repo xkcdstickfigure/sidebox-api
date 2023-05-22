@@ -11,7 +11,7 @@ const scope = "https://www.googleapis.com/auth/userinfo.email https://www.google
 func GenerateUrl(state string) string {
 	values := url.Values{}
 	values.Set("client_id", env.GoogleClientId)
-	values.Set("redirect_uri", env.Origin+"/auth/callback")
+	values.Set("redirect_uri", env.GoogleRedirect)
 	values.Set("response_type", "code")
 	values.Set("scope", scope)
 	values.Set("state", state)

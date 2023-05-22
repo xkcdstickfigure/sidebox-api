@@ -31,7 +31,7 @@ func GetProfile(code string) (Profile, error) {
 	values := url.Values{}
 	values.Set("client_id", env.GoogleClientId)
 	values.Set("client_secret", env.GoogleClientSecret)
-	values.Set("redirect_uri", env.Origin+"/auth/callback")
+	values.Set("redirect_uri", env.GoogleRedirect)
 	values.Set("grant_type", "authorization_code")
 	values.Set("code", code)
 
