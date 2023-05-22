@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"alles/boxes/api/apierr"
+	"alles/boxes/env"
 )
 
 // POST /inbox
@@ -34,12 +35,12 @@ func (h handlers) inboxCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respond(w, struct {
-		Id   string `json:"id"`
-		Code string `json:"code"`
-		Name string `json:"name"`
+		Id      string `json:"id"`
+		Name    string `json:"name"`
+		Address string `json:"address"`
 	}{
-		Id:   inbox.Id,
-		Code: inbox.Code,
-		Name: inbox.Name,
+		Id:      inbox.Id,
+		Name:    inbox.Name,
+		Address: inbox.Code + "@" + env.EmailDomain,
 	})
 }

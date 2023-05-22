@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"alles/boxes/api/apierr"
+	"alles/boxes/env"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -59,12 +60,12 @@ func (h handlers) inboxGet(w http.ResponseWriter, r *http.Request) {
 	respond(w, struct {
 		Id       string       `json:"id"`
 		Name     string       `json:"name"`
-		Code     string       `json:"code"`
+		Address  string       `json:"address"`
 		Messages []resMessage `json:"messages"`
 	}{
 		Id:       inbox.Id,
 		Name:     inbox.Name,
-		Code:     inbox.Code,
+		Address:  inbox.Code + "@" + env.EmailDomain,
 		Messages: resMessages,
 	})
 }

@@ -13,3 +13,5 @@ var GoogleClientSecret = os.Getenv("GOOGLE_CLIENT_SECRET")
 var GoogleRedirect = os.Getenv("GOOGLE_REDIRECT")
 
 var ReceiveSecret = os.Getenv("RECEIVE_SECRET")
+
+var EmailDomain = os.Getenv("EMAIL_DOMAIN")
