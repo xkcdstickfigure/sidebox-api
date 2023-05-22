@@ -26,6 +26,9 @@ func (h handlers) inboxGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// mark inbox as read
+	h.db.InboxSetUnread(r.Context(), inbox.Id, false)
+
 	// list messages
 	messages, err := h.db.MessageList(r.Context(), inbox.Id)
 	if err != nil {

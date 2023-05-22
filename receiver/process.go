@@ -58,5 +58,8 @@ func process(ctx context.Context, db store.Store, input io.Reader) error {
 		return err
 	}
 
+	// mark inbox as read
+	db.InboxSetUnread(ctx, inbox.Id, true)
+
 	return nil
 }

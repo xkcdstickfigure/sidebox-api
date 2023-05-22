@@ -31,17 +31,19 @@ func (h handlers) account(w http.ResponseWriter, r *http.Request) {
 
 	// response
 	type resInbox struct {
-		Id   string `json:"id"`
-		Name string `json:"name"`
-		Code string `json:"code"`
+		Id     string `json:"id"`
+		Name   string `json:"name"`
+		Code   string `json:"code"`
+		Unread bool   `json:"unread"`
 	}
 
 	resInboxes := []resInbox{}
 	for _, i := range inboxes {
 		resInboxes = append(resInboxes, resInbox{
-			Id:   i.Id,
-			Name: i.Name,
-			Code: i.Code,
+			Id:     i.Id,
+			Name:   i.Name,
+			Code:   i.Code,
+			Unread: i.Unread,
 		})
 	}
 
