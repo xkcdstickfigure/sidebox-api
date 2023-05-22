@@ -13,6 +13,7 @@ func NewRouter(db store.Store) chi.Router {
 	r.Post("/login", h.login)
 	r.Get("/account", h.account)
 	r.Post("/inbox", h.inboxCreate)
+	r.Get("/inbox/{id}", h.inboxGet)
 
 	return r
 }
