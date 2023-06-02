@@ -31,4 +31,7 @@ func (h handlers) inboxDelete(w http.ResponseWriter, r *http.Request) {
 		apierr.Respond(w, apierr.DatabaseError)
 		return
 	}
+
+	// response
+	respond(w, struct {}{})
 }
