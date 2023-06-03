@@ -16,7 +16,7 @@ func (h handlers) inboxCreate(w http.ResponseWriter, r *http.Request) {
 		Name string
 	}
 	err := json.NewDecoder(r.Body).Decode(&body)
-	if err != nil {
+	if err != nil || body.Name == "" {
 		apierr.Respond(w, apierr.InvalidBody)
 		return
 	}
