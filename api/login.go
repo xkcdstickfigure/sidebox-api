@@ -12,7 +12,8 @@ import (
 func (h handlers) login(w http.ResponseWriter, r *http.Request) {
 	// parse body
 	var body struct {
-		Code string
+		Code  string
+		State string
 	}
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
@@ -28,7 +29,7 @@ func (h handlers) login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// create or get account with google id
-	account, err := h.db.AccountCreate(r.Context(), profile.Name, profile.Email, profile.Id)
+	account, err := h.db.AccountCreate(r.Context(), profile.Name, profile.Email, profile.Id, body.State)
 	if err != nil {
 		apierr.Respond(w, apierr.DatabaseError)
 		return

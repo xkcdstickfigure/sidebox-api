@@ -22,13 +22,13 @@ func (s Store) AccountGet(ctx context.Context, id string) (Account, error) {
 	return account, err
 }
 
-func (s Store) AccountCreate(ctx context.Context, name string, email string, googleId string) (Account, error) {
+func (s Store) AccountCreate(ctx context.Context, name string, email string, googleId string, ref string) (Account, error) {
 	var account Account
-	err := s.Conn.QueryRow(ctx, "insert into account (id, name, email, google_id) "+
-		"values ($1, $2, $3, $4) "+
+	err := s.Conn.QueryRow(ctx, "insert into account (id, name, email, google_id, ref) "+
+		"values ($1, $2, $3, $4, $5) "+
 		"on conflict (google_id) do update set name=$2, email=$3 "+
 		"returning id, name, email google_id, created_at",
-		uuid.New(), name, email, googleId).
+		uuid.New(), name, email, googleId, ref).
 		Scan(&account.Id, &account.Name, &account.Email, &account.CreatedAt)
 	return account, err
 }

@@ -4,7 +4,8 @@ create table account (
     email          text          not null unique,
     google_id      text          not null unique,
     created_at     timestamptz   not null default now(),
-    last_used_at   timestamptz   not null default now()
+    last_used_at   timestamptz   not null default now(),
+    ref            text          not null
 );
 
 create table session (
