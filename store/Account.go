@@ -32,3 +32,8 @@ func (s Store) AccountCreate(ctx context.Context, name string, email string, goo
 		Scan(&account.Id, &account.Name, &account.Email, &account.CreatedAt)
 	return account, err
 }
+
+func (s Store) AccountSetLastUsedAt(ctx context.Context, id string) error {
+	_, err := s.Conn.Exec(ctx, "update account set last_used_at=now() where id=$1", id)
+	return err
+}

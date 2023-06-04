@@ -3,7 +3,8 @@ create table account (
     name           text          not null,
     email          text          not null unique,
     google_id      text          not null unique,
-    created_at     timestamptz   not null default now()
+    created_at     timestamptz   not null default now(),
+    last_used_at   timestamptz   not null default now()
 );
 
 create table session (

@@ -16,6 +16,9 @@ func (h handlers) account(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// set account last used at
+	h.db.AccountSetLastUsedAt(r.Context(), session.AccountId)
+
 	// get account
 	account, err := h.db.AccountGet(r.Context(), session.AccountId)
 	if err != nil {
