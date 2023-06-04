@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"net"
 	"net/http"
 	"strings"
 )
@@ -17,7 +18,7 @@ func getAddress(r *http.Request) string {
 	address := r.Header.Get("x-forwarded-for")
 	address = strings.TrimSpace(strings.Split(address, ",")[len(strings.Split(address, ","))-1])
 	if address == "" {
-		address = r.RemoteAddr
+		address, _, _ = net.SplitHostPort(r.RemoteAddr)
 	}
 	return address
 }
