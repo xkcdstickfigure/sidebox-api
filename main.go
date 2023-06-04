@@ -31,8 +31,13 @@ func main() {
 
 	// redirect to google auth
 	r.Get("/auth", func(w http.ResponseWriter, r *http.Request) {
-		ref, _ := r.Cookie("ref")
-		http.Redirect(w, r, google.GenerateUrl(ref.Value), http.StatusTemporaryRedirect)
+		refCookie, err := r.Cookie("ref")
+		ref := ""
+		if err == nil {
+			ref = refCookie.Value
+		}
+
+		http.Redirect(w, r, google.GenerateUrl(ref), http.StatusTemporaryRedirect)
 	})
 
 	// start http server
