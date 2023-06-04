@@ -24,8 +24,8 @@ func (s Store) AccountGet(ctx context.Context, id string) (Account, error) {
 
 func (s Store) AccountCreate(ctx context.Context, name string, email string, googleId string) (Account, error) {
 	var account Account
-	err := s.Conn.QueryRow(ctx, "insert into account (id, name, email, google_id, created_at) "+
-		"values ($1, $2, $3, $4, now()) "+
+	err := s.Conn.QueryRow(ctx, "insert into account (id, name, email, google_id) "+
+		"values ($1, $2, $3, $4) "+
 		"on conflict (google_id) do update set name=$2, email=$3 "+
 		"returning id, name, email google_id, created_at",
 		uuid.New(), name, email, googleId).

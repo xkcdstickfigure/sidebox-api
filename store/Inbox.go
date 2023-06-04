@@ -34,8 +34,8 @@ func (s Store) InboxGetByCode(ctx context.Context, code string) (Inbox, error) {
 
 func (s Store) InboxCreate(ctx context.Context, accountId string, name string) (Inbox, error) {
 	var inbox Inbox
-	err := s.Conn.QueryRow(ctx, "insert into inbox (id, account_id, code, name, created_at) "+
-		"values ($1, $2, $3, $4, now()) "+
+	err := s.Conn.QueryRow(ctx, "insert into inbox (id, account_id, code, name) "+
+		"values ($1, $2, $3, $4) "+
 		"returning id, account_id, code, name, unread, created_at",
 		uuid.New(), accountId, random.String(16), name).
 		Scan(&inbox.Id, &inbox.AccountId, &inbox.Code, &inbox.Name, &inbox.Unread, &inbox.CreatedAt)

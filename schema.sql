@@ -1,9 +1,9 @@
 create table account (
-    id           uuid          primary key,
-    name         text          not null,
-    email        text          not null unique,
-    google_id    text          not null unique,
-    created_at   timestamptz   not null
+    id             uuid          primary key,
+    name           text          not null,
+    email          text          not null unique,
+    google_id      text          not null unique,
+    created_at     timestamptz   not null default now()
 );
 
 create table session (
@@ -12,7 +12,7 @@ create table session (
     token        text          not null unique,
     address      text          not null,
     user_agent   text          not null,
-    created_at   timestamptz   not null
+    created_at   timestamptz   not null default now()
 );
 
 create table inbox (
@@ -21,7 +21,7 @@ create table inbox (
     code         text          not null unique,
     name         text          not null,
     unread       boolean       not null default false,
-    created_at   timestamptz   not null
+    created_at   timestamptz   not null default now()
 );
 
 create table message (
@@ -33,5 +33,5 @@ create table message (
     subject        text          not null,
     body           text          not null,
     html           boolean       not null,
-    date           timestamptz   not null
+    date           timestamptz   not null default now()
 );
