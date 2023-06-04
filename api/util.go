@@ -17,7 +17,7 @@ func getAddress(r *http.Request) string {
 	address := r.Header.Get("x-forwarded-for")
 	address = strings.TrimSpace(strings.Split(address, ",")[len(strings.Split(address, ","))-1])
 	if address == "" {
-		address = strings.Split(r.RemoteAddr, ":")[0]
+		address = r.RemoteAddr
 	}
 	return address
 }
