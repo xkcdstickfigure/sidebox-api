@@ -38,6 +38,7 @@ func (h handlers) account(w http.ResponseWriter, r *http.Request) {
 		Id      string `json:"id"`
 		Name    string `json:"name"`
 		Address string `json:"address"`
+		Muted   bool   `json:"muted"`
 		Unread  bool   `json:"unread"`
 	}
 
@@ -47,7 +48,8 @@ func (h handlers) account(w http.ResponseWriter, r *http.Request) {
 			Id:      i.Id,
 			Name:    i.Name,
 			Address: i.Code + "@" + env.EmailDomain,
-			Unread:  i.Unread,
+			Muted:   i.Muted,
+			Unread:  i.Unread && !i.Muted,
 		})
 	}
 

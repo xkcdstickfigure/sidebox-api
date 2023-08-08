@@ -22,6 +22,7 @@ create table inbox (
     account_id   uuid          not null references account on delete cascade,
     code         text          not null unique,
     name         text          not null,
+    muted        boolean       not null default false,
     unread       boolean       not null default false,
     created_at   timestamptz   not null default now()
 );

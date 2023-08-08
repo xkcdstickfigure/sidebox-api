@@ -61,11 +61,13 @@ func (h handlers) inboxGet(w http.ResponseWriter, r *http.Request) {
 		Id       string       `json:"id"`
 		Name     string       `json:"name"`
 		Address  string       `json:"address"`
+		Muted    bool         `json:"muted"`
 		Messages []resMessage `json:"messages"`
 	}{
 		Id:       inbox.Id,
 		Name:     inbox.Name,
 		Address:  inbox.Code + "@" + env.EmailDomain,
+		Muted:    inbox.Muted,
 		Messages: resMessages,
 	})
 }
