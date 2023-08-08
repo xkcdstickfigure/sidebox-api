@@ -65,6 +65,11 @@ func (s Store) InboxList(ctx context.Context, accountId string) ([]Inbox, error)
 	return inboxes, err
 }
 
+func (s Store) InboxSetName(ctx context.Context, id string, name string) error {
+	_, err := s.Conn.Exec(ctx, "update inbox set name=$2 where id=$1", id, name)
+	return err
+}
+
 func (s Store) InboxSetMuted(ctx context.Context, id string, muted bool) error {
 	_, err := s.Conn.Exec(ctx, "update inbox set muted=$2 where id=$1", id, muted)
 	return err
